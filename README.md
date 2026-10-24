@@ -28,3 +28,16 @@ Run the deterministic local gate:
     tools/dev/check
 
 Do not commit provider tokens, OAuth secrets, API keys, account-specific inventory, or generated credential material.
+
+
+## Observability
+
+The inference gateway is designed to be observable across the full agent path:
+
+    ChatGPT -> Arcade -> MCP wrapper -> Timeweb AI Gateway -> selected model
+
+Observability is part of the architecture contract. The wrapper must support
+correlation and bounded failure attribution without requiring prompt/response
+logging or exposing credentials, and telemetry-export failure must not break
+inference. See [docs/observability.md](docs/observability.md).
+
