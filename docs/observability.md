@@ -203,12 +203,12 @@ Suggested diagnostic classes:
 
 | failure_domain | Evidence threshold |
 | --- | --- |
-| client | failure is observed before Arcade/upstream execution evidence exists |
+| client | affirmative client-side evidence shows invocation/transport failure before Arcade/upstream execution |
 | arcade | Arcade evidence shows authorization/policy/routing/gateway failure before wrapper execution |
 | wrapper | wrapper receives the call and fails before provider dispatch, or fails internally |
 | timeweb | wrapper dispatches provider request and Timeweb/network/provider transport returns a bounded failure |
 | model | provider execution succeeds but generation/output exhibits a reproducible or evaluated anomaly |
-| unknown | evidence is insufficient, conflicting, or crosses an unobservable gap |
+| unknown | evidence is insufficient, conflicting, crosses an unobservable gap, or downstream execution evidence is simply absent |
 
 The classification must preserve UNKNOWN instead of guessing from a generic
 HTTP, MCP, or model error.
