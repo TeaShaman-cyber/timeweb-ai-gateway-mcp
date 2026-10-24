@@ -32,6 +32,12 @@ class RepoContractTests(unittest.TestCase):
         self.assertIn("a8e497a9faefdb394f1d5ec6b046c28344f40cde", text)
         self.assertIn("separate credential plane", text)
 
+    def test_no_python_cache_artifacts_are_tracked(self):
+        import subprocess
+        tracked = subprocess.check_output(["git", "ls-files"], text=True).splitlines()
+        bad = [p for p in tracked if "__pycache__/" in p or p.endswith(".pyc")]
+        self.assertEqual(bad, [], bad)
+
     def test_devops_doc_records_exact_cycle_and_authority_boundary(self):
         text = (ROOT / "docs/devops-cycle.md").read_text(encoding="utf-8")
         for phrase in (
