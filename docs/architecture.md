@@ -73,3 +73,28 @@ The first implementation is dependency-free standard Node core:
 - provider response parsing with no secret echo.
 
 MCP SDK transport, remote HTTPS deployment, and ChatGPT App/plugin binding are separate promotion steps after this core is green.
+
+
+## Observability invariant
+
+Observability is a first-class property of the gateway, not a post-deployment
+debugging feature.
+
+The end-to-end path is treated as distinct evidence domains:
+
+    ChatGPT -> Arcade -> MCP wrapper -> Timeweb AI Gateway -> selected model
+
+The implementation must preserve enough structured correlation to localize
+failures to the narrowest observable domain without guessing across hidden
+runtime boundaries. Arcade gateway/audit evidence and wrapper/provider/model
+tracing are complementary evidence sources, not interchangeable proof.
+
+Baseline telemetry must not require prompt/response persistence or expose
+credentials. Telemetry export (for example to Langfuse through an
+OpenTelemetry-compatible path) must remain fail-open with respect to inference
+correctness.
+
+The detailed trace model, minimum safe telemetry schema, failure-domain
+classification, and implementation acceptance criteria are specified in
+[docs/observability.md](observability.md).
+
